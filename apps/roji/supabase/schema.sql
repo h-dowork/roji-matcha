@@ -12,3 +12,8 @@ alter table subscribers enable row level security;
 create policy "anyone can subscribe"
   on subscribers for insert
   with check (true);
+
+-- Allows the admin stats API (anon key) to read subscriber data
+create policy "anon can read subscribers"
+  on subscribers for select
+  using (true);

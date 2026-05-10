@@ -50,9 +50,10 @@ function errorStream(message: string): Response {
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
-  const { messages, mcpServers: enabledServers } = (await req.json()) as {
+  const { messages, mcpServers: enabledServers, systemPrompt } = (await req.json()) as {
     messages: AnthropicMessage[];
     mcpServers?: string[];
+    systemPrompt?: string;
   };
 
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -107,6 +108,7 @@ export async function POST(req: NextRequest): Promise<Response> {
             max_tokens: 4096,
             messages: conversationMessages,
             stream: true,
+            ...(systemPrompt ? { system: systemPrompt } : {}),
             ...(anthropicTools.length > 0 ? { tools: anthropicTools } : {}),
           };
 
