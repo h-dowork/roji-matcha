@@ -1,0 +1,14 @@
+{
+  "name": "claude-mcp-stack",
+  "private": true,
+  "workspaces": ["apps/*", "servers/*"],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w apps/web\" \"npm run start -w servers/mcp-playwright\" \"npm run start -w servers/mcp-ssh\" \"npm run start -w servers/mcp-vercel\" \"npm run start -w servers/mcp-supabase\"",
+    "build": "npm run build --workspaces",
+    "servers": "concurrently \"npm run start -w servers/mcp-playwright\" \"npm run start -w servers/mcp-ssh\" \"npm run start -w servers/mcp-vercel\" \"npm run start -w servers/mcp-supabase\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.4.5"
+  }
+}
