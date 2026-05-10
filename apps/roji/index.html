@@ -1191,11 +1191,12 @@
         <p class="section-label">Join the Garden</p>
         <h2 id="cta-title" class="section-title serif">Receive the first sip<br><em>of every harvest</em></h2>
         <p class="cta-sub">Early access to seasonal tins, brew guides, and quiet notes from Uji. No noise — just matcha.</p>
-        <form class="cta-form" onsubmit="return false;" aria-label="Newsletter signup">
+        <form class="cta-form" id="subscribe-form" aria-label="Newsletter signup">
           <label for="email" class="visually-hidden">Email address</label>
           <input id="email" class="cta-input" type="email" placeholder="your@email.com" autocomplete="email" required />
-          <button type="submit" class="cta-submit">Join Waitlist</button>
+          <button type="submit" class="cta-submit" id="subscribe-btn">Join Waitlist</button>
         </form>
+        <div id="subscribe-toast" role="status" aria-live="polite" style="margin-top:16px;min-height:20px;"></div>
       </div>
     </div>
   </section>
@@ -1256,9 +1257,67 @@
 
   <style>
     .visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+    /* ── Toast ── */
+    .toast {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast--success { background: rgba(178,202,175,0.18); color: var(--c-pale); border: 1px solid rgba(178,202,175,0.28); }
+    .toast--error   { background: rgba(200,150,150,0.15); color: #e8b8b8; border: 1px solid rgba(200,150,150,0.25); }
   </style>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script>
+    // ── Supabase ───────────────────────────────────────────
+    const { createClient } = supabase;
+    const db = createClient(
+      'https://ruqpqizuqcfnpajkysgt.supabase.co',
+      'sb_publishable_f8B5Ro1eBl1kyC11I-fcZw_1zARwhkU'
+    );
+
+    // ── Newsletter form ────────────────────────────────────
+    const form    = document.getElementById('subscribe-form');
+    const btn     = document.getElementById('subscribe-btn');
+    const toast   = document.getElementById('subscribe-toast');
+
+    function showToast(msg, type) {
+      toast.innerHTML = `<span class="toast toast--${type} show">${msg}</span>`;
+      setTimeout(() => { toast.querySelector('.toast').classList.remove('show'); }, 4000);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      btn.textContent = 'Saving…';
+      btn.disabled = true;
+
+      const { error } = await db.from('subscribers').insert({ email });
+
+      btn.textContent = 'Join Waitlist';
+      btn.disabled = false;
+
+      if (error) {
+        if (error.code === '23505') {
+          showToast('You\'re already on the list.', 'success');
+        } else {
+          showToast('Something went wrong — try again.', 'error');
+          console.error(error);
+        }
+      } else {
+        showToast('You\'re on the list. Welcome to Roji.', 'success');
+        form.reset();
+      }
+    });
+
     // ── Scroll-triggered fade-ins ──────────────────────────
     const observer = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
@@ -1267,7 +1326,7 @@
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
     // ── Mobile nav toggle ──────────────────────────────────
-    const burger = document.querySelector('.nav-burger');
+    const burger   = document.querySelector('.nav-burger');
     const navLinks = document.querySelector('.nav-links');
     burger.addEventListener('click', () => {
       const open = navLinks.style.display === 'flex';
