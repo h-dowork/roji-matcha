@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roji — Premium Matcha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Tokens ─────────────────────────────────────────────── */
+    :root {
+      --c-deep:     #2A5040;
+      --c-mid:      #3D6B52;
+      --c-sage:     #6E9B7B;
+      --c-pale:     #B2CAAF;
+      --c-whisper:  #E4EDE4;
+      --c-cream:    #F6F2EA;
+      --c-parchment:#EDE7D9;
+      --c-sand:     #D0C5AE;
+      --c-gold:     #A67C3B;
+      --c-earth:    #7A6644;
+      --c-text:     #1A2A1D;
+      --c-muted:    #4A5E4D;
+      --c-light:    #6C7D6D;
+      --c-border:   #D5CEBD;
+
+      --r-card:  16px;
+      --r-btn:   999px;
+      --r-img:   12px;
+
+      --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ─── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--c-cream);
+      color: var(--c-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    ul { list-style: none; }
+
+    /* ─── Typography ─────────────────────────────────────────── */
+    .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-light);
+    }
+
+    /* ─── Layout ─────────────────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .container--narrow { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── Nav ────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(246, 242, 234, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--c-deep);
+      letter-spacing: 0.04em;
+    }
+    .nav-logo span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--c-sage);
+      border-radius: 50%;
+      margin-left: 3px;
+      vertical-align: middle;
+      position: relative;
+      top: -2px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--c-muted);
+      transition: color 0.2s var(--ease-out);
+    }
+    .nav-links a:hover { color: var(--c-deep); }
+    .nav-cta {
+      background: var(--c-deep);
+      color: var(--c-cream) !important;
+      padding: 9px 22px;
+      border-radius: var(--r-btn);
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      transition: background 0.2s var(--ease-out), transform 0.15s var(--ease-out) !important;
+    }
+    .nav-cta:hover { background: var(--c-mid) !important; transform: translateY(-1px); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    .nav-burger span { width: 22px; height: 1.5px; background: var(--c-text); border-radius: 2px; transition: 0.2s; }
+
+    /* ─── Hero ───────────────────────────────────────────────── */
+    .hero {
+      min-height: calc(100vh - 64px);
+      background: var(--c-deep);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 30% 60%, rgba(110, 155, 123, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px 80px 80px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-pale);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--c-sage);
+      display: block;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 6vw, 84px);
+      font-weight: 500;
+      line-height: 1.04;
+      color: var(--c-cream);
+      margin-bottom: 28px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--c-pale);
+    }
+    .hero-body {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(246, 242, 234, 0.65);
+      line-height: 1.7;
+      max-width: 400px;
+      margin-bottom: 48px;
+    }
+    .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--c-cream);
+      color: var(--c-deep);
+      padding: 14px 32px;
+      border-radius: var(--r-btn);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s var(--ease-out), transform 0.15s var(--ease-out), box-shadow 0.2s var(--ease-out);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      background: var(--c-parchment);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .btn-primary:active { transform: scale(0.97); }
+    .btn-ghost {
+      color: rgba(246, 242, 234, 0.7);
+      font-size: 14px;
+      font-weight: 400;
+      padding: 14px 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(246, 242, 234, 0.2);
+      transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+    }
+    .btn-ghost:hover { color: var(--c-cream); border-color: rgba(246,242,234,0.5); }
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image-inner {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, var(--c-deep) 0%, transparent 25%),
+        url('https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=900&q=80&fit=crop') center/cover no-repeat;
+    }
+    .hero-stats {
+      position: absolute;
+      bottom: 40px;
+      left: 80px;
+      display: flex;
+      gap: 40px;
+      z-index: 2;
+    }
+    .hero-stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--c-cream);
+      line-height: 1;
+    }
+    .hero-stat-label { font-size: 11px; color: var(--c-pale); letter-spacing: 0.1em; margin-top: 4px; }
+
+    /* ─── Marquee ─────────────────────────────────────────────── */
+    .marquee-wrap {
+      background: var(--c-mid);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      gap: 0;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-track span {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(246,242,234,0.75);
+      padding: 0 40px;
+    }
+    .marquee-track span.dot::after {
+      content: '·';
+      margin-left: 40px;
+      color: var(--c-pale);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── Section scaffolding ─────────────────────────────────── */
+    section { padding: 100px 0; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-sage);
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 4vw, 52px);
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--c-text);
+    }
+    .section-title em { font-style: italic; color: var(--c-mid); }
+
+    /* ─── About ──────────────────────────────────────────────── */
+    .about { background: var(--c-cream); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+    }
+    .about-image-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: var(--r-card);
+    }
+    .about-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--c-deep);
+      color: var(--c-cream);
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .about-badge-num { font-size: 28px; font-weight: 600; line-height: 1; }
+    .about-badge-text { font-size: 11px; letter-spacing: 0.08em; margin-top: 4px; opacity: 0.75; }
+    .about-body { font-size: 16px; font-weight: 300; color: var(--c-muted); line-height: 1.8; margin: 24px 0 36px; }
+    .about-qualities { display: flex; flex-direction: column; gap: 16px; }
+    .about-quality {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      background: var(--c-parchment);
+      border-radius: 10px;
+    }
+    .about-quality-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--c-deep);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .about-quality-icon svg { width: 18px; height: 18px; color: var(--c-pale); }
+    .about-quality-title { font-size: 14px; font-weight: 500; color: var(--c-text); margin-bottom: 2px; }
+    .about-quality-desc { font-size: 13px; color: var(--c-light); line-height: 1.5; }
+
+    /* ─── Process ────────────────────────────────────────────── */
+    .process { background: var(--c-parchment); }
+    .process-header { text-align: center; margin-bottom: 64px; }
+    .process-header .section-title { margin-top: 12px; }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .process-card {
+      background: var(--c-cream);
+      padding: 36px 28px;
+      position: relative;
+      transition: background 0.25s var(--ease-out), transform 0.25s var(--ease-expo);
+    }
+    .process-card:first-child { border-radius: var(--r-card) 0 0 var(--r-card); }
+    .process-card:last-child  { border-radius: 0 var(--r-card) var(--r-card) 0; }
+    .process-card:hover { background: var(--c-deep); transform: translateY(-4px); z-index: 2; }
+    .process-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 400;
+      color: var(--c-pale);
+      line-height: 1;
+      margin-bottom: 24px;
+      transition: color 0.25s;
+    }
+    .process-card:hover .process-num { color: rgba(178,202,175, 0.4); }
+    .process-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--c-text);
+      margin-bottom: 12px;
+      transition: color 0.25s;
+    }
+    .process-card:hover .process-card-title { color: var(--c-cream); }
+    .process-card-desc {
+      font-size: 13px;
+      color: var(--c-light);
+      line-height: 1.65;
+      transition: color 0.25s;
+    }
+    .process-card:hover .process-card-desc { color: rgba(246,242,234,0.65); }
+    .process-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 20px;
+    }
+    .process-icon svg { width: 100%; height: 100%; color: var(--c-sage); transition: color 0.25s; }
+    .process-card:hover .process-icon svg { color: var(--c-pale); }
+
+    /* ─── Products ───────────────────────────────────────────── */
+    .products { background: var(--c-cream); }
+    .products-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 52px;
+    }
+    .products-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--c-mid);
+      border-bottom: 1px solid var(--c-sand);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .products-link:hover { color: var(--c-deep); border-color: var(--c-mid); }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .product-card {
+      background: var(--c-parchment);
+      border-radius: var(--r-card);
+      overflow: hidden;
+      transition: transform 0.25s var(--ease-expo), box-shadow 0.25s var(--ease-out);
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(42, 80, 64, 0.12);
+    }
+    .product-image {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      transition: transform 0.4s var(--ease-out);
+    }
+    .product-card:hover .product-image { transform: scale(1.03); }
+    .product-image-wrap { overflow: hidden; }
+    .product-body { padding: 24px; }
+    .product-tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-sage);
+      margin-bottom: 8px;
+    }
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--c-text);
+      margin-bottom: 8px;
+    }
+    .product-desc { font-size: 13px; color: var(--c-light); line-height: 1.6; margin-bottom: 20px; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--c-deep);
+    }
+    .product-add {
+      background: var(--c-deep);
+      color: var(--c-cream);
+      padding: 10px 20px;
+      border-radius: var(--r-btn);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .product-add:hover { background: var(--c-mid); transform: translateY(-1px); }
+    .product-add:active { transform: scale(0.96); }
+
+    /* ─── Philosophy ─────────────────────────────────────────── */
+    .philosophy {
+      background: var(--c-deep);
+      overflow: hidden;
+      position: relative;
+    }
+    .philosophy::after {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(178, 202, 175, 0.12);
+      pointer-events: none;
+    }
+    .philosophy::before {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      right: 60px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(178, 202, 175, 0.07);
+      pointer-events: none;
+    }
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .philosophy-text .section-label { color: var(--c-pale); }
+    .philosophy-text .section-title { color: var(--c-cream); margin-top: 12px; }
+    .philosophy-text .section-title em { color: var(--c-pale); }
+    .philosophy-body {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(246, 242, 234, 0.62);
+      line-height: 1.8;
+      margin: 28px 0 40px;
+    }
+    .philosophy-values { display: flex; flex-direction: column; gap: 1px; }
+    .philosophy-value {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(178, 202, 175, 0.15);
+      transition: padding-left 0.2s var(--ease-out);
+    }
+    .philosophy-value:hover { padding-left: 8px; }
+    .philosophy-value-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: var(--c-cream);
+      font-weight: 500;
+    }
+    .philosophy-value-desc { font-size: 12px; color: rgba(246,242,234,0.45); max-width: 200px; text-align: right; }
+    .philosophy-image-wrap {
+      position: relative;
+    }
+    .philosophy-image-wrap img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      border-radius: var(--r-card);
+      opacity: 0.85;
+    }
+    .philosophy-caption {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+      background: rgba(42, 80, 64, 0.75);
+      backdrop-filter: blur(8px);
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+    .philosophy-caption-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      color: var(--c-cream);
+      margin-bottom: 4px;
+    }
+    .philosophy-caption-sub { font-size: 12px; color: var(--c-pale); }
+
+    /* ─── Testimonials ───────────────────────────────────────── */
+    .testimonials { background: var(--c-parchment); }
+    .testimonials-header { text-align: center; margin-bottom: 56px; }
+    .testimonials-header .section-title { margin-top: 12px; }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .testimonial-card {
+      background: var(--c-cream);
+      border-radius: var(--r-card);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .testimonial-stars { display: flex; gap: 3px; }
+    .testimonial-stars svg { width: 14px; height: 14px; color: var(--c-gold); fill: currentColor; }
+    .testimonial-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--c-text);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--c-whisper);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .testimonial-name { font-size: 13px; font-weight: 500; color: var(--c-text); }
+    .testimonial-meta { font-size: 11px; color: var(--c-light); margin-top: 2px; }
+
+    /* ─── CTA ─────────────────────────────────────────────────── */
+    .cta-section { background: var(--c-cream); }
+    .cta-box {
+      background: var(--c-deep);
+      border-radius: 24px;
+      padding: 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      border: 1px solid rgba(178,202,175,0.1);
+      pointer-events: none;
+    }
+    .cta-box::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; right: -60px;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      border: 1px solid rgba(178,202,175,0.07);
+      pointer-events: none;
+    }
+    .cta-box .section-label { color: var(--c-pale); margin-bottom: 16px; }
+    .cta-box .section-title { color: var(--c-cream); margin-bottom: 16px; }
+    .cta-sub {
+      font-size: 15px;
+      color: rgba(246,242,234,0.6);
+      max-width: 420px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .cta-form {
+      display: flex;
+      gap: 8px;
+      max-width: 440px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-input {
+      flex: 1;
+      background: rgba(246,242,234,0.1);
+      border: 1px solid rgba(178,202,175,0.25);
+      border-radius: var(--r-btn);
+      padding: 13px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--c-cream);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cta-input::placeholder { color: rgba(246,242,234,0.35); }
+    .cta-input:focus { border-color: rgba(178,202,175,0.55); background: rgba(246,242,234,0.14); }
+    .cta-submit {
+      background: var(--c-cream);
+      color: var(--c-deep);
+      padding: 13px 26px;
+      border-radius: var(--r-btn);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .cta-submit:hover { background: var(--c-parchment); transform: translateY(-1px); }
+    .cta-submit:active { transform: scale(0.97); }
+
+    /* ─── Footer ─────────────────────────────────────────────── */
+    footer {
+      background: var(--c-text);
+      padding: 64px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 52px;
+    }
+    .footer-brand .nav-logo {
+      color: var(--c-cream);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .footer-brand p {
+      font-size: 13px;
+      color: rgba(246,242,234,0.4);
+      line-height: 1.7;
+      max-width: 220px;
+    }
+    .footer-col-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(246,242,234,0.4);
+      margin-bottom: 20px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(246,242,234,0.55);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--c-pale); }
+    .footer-bottom {
+      border-top: 1px solid rgba(246,242,234,0.08);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-bottom p { font-size: 12px; color: rgba(246,242,234,0.3); }
+    .footer-social { display: flex; gap: 16px; }
+    .footer-social a {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(246,242,234,0.12);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .footer-social a:hover { border-color: rgba(178,202,175,0.4); background: rgba(178,202,175,0.07); }
+    .footer-social svg { width: 14px; height: 14px; color: rgba(246,242,234,0.5); }
+
+    /* ─── Animations ─────────────────────────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ease-expo), transform 0.6s var(--ease-expo); }
+      .fade-in.visible { opacity: 1; transform: translateY(0); }
+      .fade-in:nth-child(2) { transition-delay: 0.1s; }
+      .fade-in:nth-child(3) { transition-delay: 0.2s; }
+      .fade-in:nth-child(4) { transition-delay: 0.3s; }
+    }
+
+    /* ─── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-image { height: 360px; }
+      .hero-image-inner { background-image: url('https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=900&q=80&fit=crop'); }
+      .hero-content { padding: 64px 40px; }
+      .hero-stats { left: 40px; bottom: 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-badge { right: 16px; bottom: -16px; }
+      .philosophy-grid { grid-template-columns: 1fr; gap: 48px; }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-card:first-child { border-radius: var(--r-card) 0 0 0; }
+      .process-card:last-child { border-radius: 0 0 var(--r-card) 0; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 72px 0; }
+      .hero-content { padding: 48px 24px; }
+      .hero-stats { left: 24px; gap: 24px; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      .products-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+      .process-card:first-child, .process-card:last-child { border-radius: 0; }
+      .process-card:first-child { border-radius: var(--r-card) var(--r-card) 0 0; }
+      .process-card:last-child { border-radius: 0 0 var(--r-card) var(--r-card); }
+      .products-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 16px; }
+      .cta-box { padding: 48px 24px; }
+      .cta-form { flex-direction: column; }
+      .about-image-wrap img { height: 380px; }
+    }
+
+    @media (max-width: 375px) {
+      .hero-title { font-size: 42px; }
+      .section-title { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Nav ════════════════════════════════════════════════ -->
+  <nav role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="Roji home">Roji<span aria-hidden="true"></span></a>
+      <ul class="nav-links" role="list">
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#products">Shop</a></li>
+        <li><a href="#philosophy">Philosophy</a></li>
+        <li><a href="#products" class="nav-cta">Shop Now</a></li>
+      </ul>
+      <button class="nav-burger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ Hero ════════════════════════════════════════════════ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Premium Ceremonial Grade</p>
+      <h1 id="hero-title" class="hero-title serif">
+        Where <em>every</em><br>sip becomes<br>a ritual
+      </h1>
+      <p class="hero-body">
+        Stone-ground matcha from Uji, Japan — grown by fifth-generation farmers,
+        shade-dried in mountain air, and delivered to your cup with intention.
+      </p>
+      <div class="hero-actions">
+        <a href="#products" class="btn-primary">
+          Explore Collection
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#about" class="btn-ghost">
+          Our Story
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-image" aria-hidden="true">
+      <div class="hero-image-inner"></div>
+    </div>
+    <div class="hero-stats" aria-label="Key figures">
+      <div>
+        <div class="hero-stat-value serif">5th</div>
+        <div class="hero-stat-label">Generation Farmers</div>
+      </div>
+      <div>
+        <div class="hero-stat-value serif">Uji</div>
+        <div class="hero-stat-label">Origin, Japan</div>
+      </div>
+      <div>
+        <div class="hero-stat-value serif">100%</div>
+        <div class="hero-stat-label">Shade Grown</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Marquee ════════════════════════════════════════════ -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="dot">Ceremonial Grade</span>
+      <span class="dot">Uji, Japan</span>
+      <span class="dot">Stone Ground</span>
+      <span class="dot">Shade Grown</span>
+      <span class="dot">Single Origin</span>
+      <span class="dot">No Fillers</span>
+      <span class="dot">Ceremonial Grade</span>
+      <span class="dot">Uji, Japan</span>
+      <span class="dot">Stone Ground</span>
+      <span class="dot">Shade Grown</span>
+      <span class="dot">Single Origin</span>
+      <span class="dot">No Fillers</span>
+    </div>
+  </div>
+
+  <!-- ═══ About ═══════════════════════════════════════════════ -->
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image-wrap fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&q=80&fit=crop"
+            alt="Matcha preparation with bamboo whisk"
+            loading="lazy"
+            width="600"
+            height="520"
+          />
+          <div class="about-badge" aria-label="Founded in 2019">
+            <span class="about-badge-num">2019</span>
+            <span class="about-badge-text">Founded</span>
+          </div>
+        </div>
+        <div class="fade-in">
+          <p class="section-label">Our Story</p>
+          <h2 id="about-title" class="section-title">Rooted in the<br><em>ancient path</em></h2>
+          <p class="about-body">
+            Roji was born from a single cup of matcha shared in a quiet garden in Uji.
+            We set out to bridge generations of Japanese tea craftsmanship with the
+            modern world — without shortcuts.
+          </p>
+          <ul class="about-qualities" role="list">
+            <li class="about-quality">
+              <div class="about-quality-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div>
+                <div class="about-quality-title">Shade-Grown 30 Days</div>
+                <div class="about-quality-desc">Boosts L-theanine and chlorophyll for a naturally sweet, umami-rich cup</div>
+              </div>
+            </li>
+            <li class="about-quality">
+              <div class="about-quality-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+              </div>
+              <div>
+                <div class="about-quality-title">Stone Ground Granite</div>
+                <div class="about-quality-desc">Slow millstones preserve delicate amino acids destroyed by modern rollers</div>
+              </div>
+            </li>
+            <li class="about-quality">
+              <div class="about-quality-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div>
+                <div class="about-quality-title">Direct Farm Sourcing</div>
+                <div class="about-quality-desc">We partner directly with Uji's Nishi family — no brokers, no compromises</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Process ════════════════════════════════════════════ -->
+  <section class="process" id="process" aria-labelledby="process-title">
+    <div class="container">
+      <div class="process-header">
+        <p class="section-label">From Leaf to Cup</p>
+        <h2 id="process-title" class="section-title">Four steps, <em>zero compromise</em></h2>
+      </div>
+      <ol class="process-grid" role="list">
+        <li class="process-card fade-in">
+          <div class="process-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V12m0 0C12 7 7 3 7 3s5 1 5 9zm0 0c0-5 5-9 5-9s-5 4-5 9"/></svg>
+          </div>
+          <div class="process-num serif" aria-hidden="true">01</div>
+          <h3 class="process-card-title">Cultivation</h3>
+          <p class="process-card-desc">Tencha leaves grown under bamboo shade for 30 days before the first harvest of spring.</p>
+        </li>
+        <li class="process-card fade-in">
+          <div class="process-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+          </div>
+          <div class="process-num serif" aria-hidden="true">02</div>
+          <h3 class="process-card-title">Steaming & Drying</h3>
+          <p class="process-card-desc">Fresh leaves are steamed within hours of harvest, then air-dried to lock in colour and nutrients.</p>
+        </li>
+        <li class="process-card fade-in">
+          <div class="process-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M6 12H3M21 12h-3M12 6V3M12 21v-3"/></svg>
+          </div>
+          <div class="process-num serif" aria-hidden="true">03</div>
+          <h3 class="process-card-title">Stone Grinding</h3>
+          <p class="process-card-desc">Slow granite millstones — one rotation per minute — produce the silkiest, brightest powder.</p>
+        </li>
+        <li class="process-card fade-in">
+          <div class="process-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+          </div>
+          <div class="process-num serif" aria-hidden="true">04</div>
+          <h3 class="process-card-title">Sealed & Shipped</h3>
+          <p class="process-card-desc">Nitrogen-flushed, light-sealed tins shipped direct from Uji — peak freshness guaranteed.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ═══ Products ═══════════════════════════════════════════ -->
+  <section class="products" id="products" aria-labelledby="products-title">
+    <div class="container">
+      <div class="products-header">
+        <div>
+          <p class="section-label">The Collection</p>
+          <h2 id="products-title" class="section-title">Curated <em>for every ritual</em></h2>
+        </div>
+        <a href="#" class="products-link" aria-label="View all products">
+          View All
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <ul class="products-grid" role="list">
+        <li class="product-card fade-in">
+          <div class="product-image-wrap">
+            <img
+              class="product-image"
+              src="https://images.unsplash.com/photo-1582793988951-9aed5509eb97?w=600&q=80&fit=crop"
+              alt="Ceremonial Grade Matcha tin"
+              loading="lazy"
+              width="400"
+              height="260"
+            />
+          </div>
+          <div class="product-body">
+            <p class="product-tag">Ceremonial Grade</p>
+            <h3 class="product-name">Roji Classic</h3>
+            <p class="product-desc">Our purest expression — silky, umami-rich, and perfect for traditional bowl preparation.</p>
+            <div class="product-footer">
+              <span class="product-price serif">¥ 3,800</span>
+              <button class="product-add" aria-label="Add Roji Classic to cart">Add to Cart</button>
+            </div>
+          </div>
+        </li>
+        <li class="product-card fade-in">
+          <div class="product-image-wrap">
+            <img
+              class="product-image"
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop"
+              alt="Blended matcha with oat milk"
+              loading="lazy"
+              width="400"
+              height="260"
+            />
+          </div>
+          <div class="product-body">
+            <p class="product-tag">Latte Blend</p>
+            <h3 class="product-name">Roji Morning</h3>
+            <p class="product-desc">Slightly bolder, made for milk-based drinks. Holds its green even through steamed oat.</p>
+            <div class="product-footer">
+              <span class="product-price serif">¥ 2,600</span>
+              <button class="product-add" aria-label="Add Roji Morning to cart">Add to Cart</button>
+            </div>
+          </div>
+        </li>
+        <li class="product-card fade-in">
+          <div class="product-image-wrap">
+            <img
+              class="product-image"
+              src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&q=80&fit=crop"
+              alt="Matcha ritual starter kit"
+              loading="lazy"
+              width="400"
+              height="260"
+            />
+          </div>
+          <div class="product-body">
+            <p class="product-tag">Starter Kit</p>
+            <h3 class="product-name">The Ritual Set</h3>
+            <p class="product-desc">Everything to begin: 30g Roji Classic, a handmade chasen, ceramic chawan, and bamboo scoop.</p>
+            <div class="product-footer">
+              <span class="product-price serif">¥ 9,200</span>
+              <button class="product-add" aria-label="Add The Ritual Set to cart">Add to Cart</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══ Philosophy ═════════════════════════════════════════ -->
+  <section class="philosophy" id="philosophy" aria-labelledby="philosophy-title">
+    <div class="container">
+      <div class="philosophy-grid">
+        <div class="philosophy-text fade-in">
+          <p class="section-label">Our Philosophy</p>
+          <h2 id="philosophy-title" class="section-title">Slow down.<br><em>Taste deeply.</em></h2>
+          <p class="philosophy-body">
+            In a world optimised for speed, matcha asks something different of you.
+            To measure, to whisk, to pause. Roji exists to honour that pause —
+            the few quiet minutes that belong entirely to you.
+          </p>
+          <ul class="philosophy-values" role="list">
+            <li class="philosophy-value">
+              <span class="philosophy-value-name">Provenance</span>
+              <span class="philosophy-value-desc">Every tin traceable to its exact field and harvest date</span>
+            </li>
+            <li class="philosophy-value">
+              <span class="philosophy-value-name">Simplicity</span>
+              <span class="philosophy-value-desc">Nothing added. Nothing removed. Just tencha leaf, ground fine</span>
+            </li>
+            <li class="philosophy-value">
+              <span class="philosophy-value-name">Intentionality</span>
+              <span class="philosophy-value-desc">Designed to slow you down, not speed you up</span>
+            </li>
+            <li class="philosophy-value">
+              <span class="philosophy-value-name">Sustainability</span>
+              <span class="philosophy-value-desc">Carbon-offset shipping, recyclable tins, fair farm wages</span>
+            </li>
+          </ul>
+        </div>
+        <div class="philosophy-image-wrap fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1603978388877-48c24d1082c7?w=800&q=80&fit=crop"
+            alt="Traditional Japanese tea ceremony setting"
+            loading="lazy"
+            width="560"
+            height="560"
+          />
+          <div class="philosophy-caption">
+            <p class="philosophy-caption-title">Nishi Tea Garden, Uji</p>
+            <p class="philosophy-caption-sub">Spring harvest · 37.8°N, 135.8°E</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Testimonials ═══════════════════════════════════════ -->
+  <section class="testimonials" aria-labelledby="testimonials-title">
+    <div class="container">
+      <div class="testimonials-header">
+        <p class="section-label">From the Community</p>
+        <h2 id="testimonials-title" class="section-title">Sips that stay <em>with you</em></h2>
+      </div>
+      <ul class="testimonials-grid" role="list">
+        <li class="testimonial-card fade-in">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+          </div>
+          <blockquote class="testimonial-quote">
+            "The first sip told me this was different. No bitterness, just this incredibly clean, grassy sweetness I didn't know matcha could have."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">
+              <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=80&q=80&fit=crop&crop=face" alt="" role="presentation" width="40" height="40" />
+            </div>
+            <div>
+              <div class="testimonial-name">Aiko T.</div>
+              <div class="testimonial-meta">Tokyo · Verified Purchase</div>
+            </div>
+          </div>
+        </li>
+        <li class="testimonial-card fade-in">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+          </div>
+          <blockquote class="testimonial-quote">
+            "I've replaced my morning coffee entirely. The focus is steadier, the energy lasts longer, and the ritual itself is just beautiful."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">
+              <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&q=80&fit=crop&crop=face" alt="" role="presentation" width="40" height="40" />
+            </div>
+            <div>
+              <div class="testimonial-name">Marcus L.</div>
+              <div class="testimonial-meta">Berlin · 3rd Reorder</div>
+            </div>
+          </div>
+        </li>
+        <li class="testimonial-card fade-in">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,11.5 3.5,15 5,9.5 1,6 6,6"/></svg>
+          </div>
+          <blockquote class="testimonial-quote">
+            "The Ritual Set was a gift to myself and it genuinely changed my mornings. The chasen alone is a work of art — I don't want to whisk with anything else."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">
+              <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&q=80&fit=crop&crop=face" alt="" role="presentation" width="40" height="40" />
+            </div>
+            <div>
+              <div class="testimonial-name">Priya M.</div>
+              <div class="testimonial-meta">London · Verified Purchase</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ════════════════════════════════════════════════ -->
+  <section class="cta-section" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta-box">
+        <p class="section-label">Join the Garden</p>
+        <h2 id="cta-title" class="section-title serif">Receive the first sip<br><em>of every harvest</em></h2>
+        <p class="cta-sub">Early access to seasonal tins, brew guides, and quiet notes from Uji. No noise — just matcha.</p>
+        <form class="cta-form" onsubmit="return false;" aria-label="Newsletter signup">
+          <label for="email" class="visually-hidden">Email address</label>
+          <input id="email" class="cta-input" type="email" placeholder="your@email.com" autocomplete="email" required />
+          <button type="submit" class="cta-submit">Join Waitlist</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Footer ═════════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="nav-logo">Roji<span aria-hidden="true"></span></span>
+          <p>Premium ceremonial matcha sourced directly from Uji, Japan. For those who believe a good cup is worth taking time over.</p>
+        </div>
+        <div>
+          <p class="footer-col-title">Shop</p>
+          <ul class="footer-links" role="list">
+            <li><a href="#">Ceremonial Grade</a></li>
+            <li><a href="#">Latte Blend</a></li>
+            <li><a href="#">Ritual Sets</a></li>
+            <li><a href="#">Accessories</a></li>
+            <li><a href="#">Subscriptions</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Learn</p>
+          <ul class="footer-links" role="list">
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Sourcing</a></li>
+            <li><a href="#">Brew Guides</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Support</p>
+          <ul class="footer-links" role="list">
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Roji Matcha Co. All rights reserved.</p>
+        <div class="footer-social" aria-label="Social media links">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.77 1.24-5.26 1.24-5.26s-.32-.63-.32-1.57c0-1.47.85-2.57 1.91-2.57.9 0 1.34.68 1.34 1.49 0 .91-.58 2.27-.88 3.53-.25 1.05.52 1.91 1.55 1.91 1.86 0 3.11-2.39 3.11-5.22 0-2.15-1.45-3.66-3.52-3.66-2.4 0-3.81 1.8-3.81 3.66 0 .72.28 1.5.62 1.92.07.08.08.16.06.24l-.23.95c-.04.15-.13.18-.29.11-1.04-.48-1.69-2-1.69-3.22 0-2.62 1.9-5.03 5.49-5.03 2.88 0 5.12 2.05 5.12 4.79 0 2.86-1.8 5.16-4.3 5.16-.84 0-1.63-.44-1.9-.95l-.52 1.93c-.19.72-.69 1.62-1.03 2.17.78.24 1.6.37 2.45.37 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16M4 20L20 4"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    .visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  </style>
+
+  <script>
+    // ── Scroll-triggered fade-ins ──────────────────────────
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ── Mobile nav toggle ──────────────────────────────────
+    const burger = document.querySelector('.nav-burger');
+    const navLinks = document.querySelector('.nav-links');
+    burger.addEventListener('click', () => {
+      const open = navLinks.style.display === 'flex';
+      navLinks.style.display = open ? '' : 'flex';
+      navLinks.style.flexDirection = 'column';
+      navLinks.style.position = 'absolute';
+      navLinks.style.top = '64px';
+      navLinks.style.left = '0';
+      navLinks.style.right = '0';
+      navLinks.style.background = 'var(--c-cream)';
+      navLinks.style.padding = '16px 24px 24px';
+      navLinks.style.borderBottom = '1px solid var(--c-border)';
+      navLinks.style.gap = '16px';
+      burger.setAttribute('aria-expanded', String(!open));
+    });
+  </script>
+</body>
+</html>
